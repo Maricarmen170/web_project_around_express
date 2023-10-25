@@ -1,11 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-/* eslint-disable import/newline-after-import */
-/* eslint-disable quotes */
 import express from 'express';
-import fs from 'fs';
 import usersRoute from './routes/users.js';
 import cardsRoute from './routes/cards.js';
+
 const app = express();
 
 app.use('/', usersRoute);
