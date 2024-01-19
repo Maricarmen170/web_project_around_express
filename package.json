@@ -13,7 +13,8 @@
   "author": "Maricarmen",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.5.1"
   },
   "devDependencies": {
     "eslint": "^8.51.0",

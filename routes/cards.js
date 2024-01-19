@@ -1,11 +1,17 @@
 import express from 'express';
-import fs from 'fs';
+import {
+  getCards,
+  postCard,
+  deleteCardById,
+  likeCard,
+  dislikeCard,
+} from '../controllers/cards.js';
 
 const router = express.Router();
 
-router.get('/cards', (req, res) => {
-  const cards = fs.readFileSync('./data/cards.json');
-  res.json({ cards: JSON.parse(cards) });
-});
-
+router.get('/', getCards);
+router.post('/', postCard);
+router.delete('/:_id', deleteCardById);
+router.put('/:cardId/likes', likeCard);
+router.delete('/:cardId/likes', dislikeCard);
 export default router;

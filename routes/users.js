@@ -1,22 +1,18 @@
 import express from 'express';
-import fs from 'fs';
+import {
+  getUsers,
+  getUserById,
+  postUser,
+  updateUser,
+  updateAvatar,
+} from '../controllers/users.js';
 
 const router = express.Router();
 
-router.get('/users', (req, res) => {
-  const users = fs.readFileSync('./data/users.json');
-  res.json({ users: JSON.parse(users) });
-});
-
-router.get('/users/:id', (req, res) => {
-  const users = fs.readFileSync('./data/users.json');
-  const { id } = req.params;
-  const user = JSON.parse(users).find((item) => item._id === id);
-  if (!user) {
-    res.status(404).json({ message: 'ID de usuario no encontrado' });
-  } else {
-    res.json({ user });
-  }
-});
+router.get('/', getUsers);
+router.get('/:userId', getUserById);
+router.post('/', postUser);
+router.patch('/me', updateUser);
+router.patch('/me/avatar', updateAvatar);
 
 export default router;
