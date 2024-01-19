@@ -13,7 +13,7 @@ export const getUserById = async (req, res) => {
   try {
     const { userId } = req.params;
     const getUser = await User.findById(userId).orFail();
-    res.send({ data: getUser });
+    return res.send({ data: getUser });
   } catch (err) {
     if (err.name === 'CastError') {
       return res.status(400).send({ message: 'ID con formato incorrecto' });
@@ -21,8 +21,8 @@ export const getUserById = async (req, res) => {
     if (err.name === 'DocumentNotFound') {
       return res.status(404).send({ message: 'No se ha encontrado un usuario con ese ID' });
     }
+    return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
   }
-  return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
 };
 
 export const postUser = async (req, res) => {

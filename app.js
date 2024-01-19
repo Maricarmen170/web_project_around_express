@@ -25,7 +25,7 @@ app.use('/users', users);
 app.use('/cards', cards);
 
 app.get('/', (req, res) => {
-  res.status(500).send({ message: 'An error has ocurred on the server' });
+  res.status(200).send({ message: 'Bienvenido a la aplicacion' });
 });
 
 app.listen(3000, () => {

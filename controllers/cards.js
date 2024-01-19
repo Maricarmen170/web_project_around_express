@@ -3,24 +3,23 @@ import Card from '../models/cards.js';
 export const getCards = async (req, res) => {
   try {
     const cardsList = await Card.find();
-    res.send({ data: cardsList });
+    return res.send({ data: cardsList });
   } catch (err) {
-    console.log(err);
+    return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
   }
-  return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
 };
 
 export const postCard = async (req, res) => {
   try {
     const { name, link } = req.body;
     const newCard = await Card.create({ name, link, owner: req.user._id });
-    res.send({ data: newCard });
+    return res.send({ data: newCard });
   } catch (err) {
     if (err.name === 'ValidatorError') {
       return res.status(400).send({ message: 'se pasaron datos incorrectos' });
     }
+    return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
   }
-  return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
 };
 
 export const deleteCardById = async (req, res) => {
@@ -39,8 +38,8 @@ export const deleteCardById = async (req, res) => {
     if (err.name === 'DocumentNotFound') {
       return res.status(404).send({ message: 'No se ha encontrado la carta' });
     }
+    return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
   }
-  return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
 };
 
 export const likeCard = async (req, res) => {
@@ -51,7 +50,7 @@ export const likeCard = async (req, res) => {
       { $addToSet: { likes: req.user._id } },
       { new: true },
     ).orFail();
-    res.send({ data: likedCard });
+    return res.send({ data: likedCard });
   } catch (err) {
     if (err.name === 'CastError') {
       return res.status(400).send({ message: 'ID con formato incorrecto' });
@@ -59,8 +58,8 @@ export const likeCard = async (req, res) => {
     if (err.name === 'DocumentNotFound') {
       return res.status(404).send({ message: 'No se ha encontrado la carta' });
     }
+    return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
   }
-  return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
 };
 
 export const dislikeCard = async (req, res) => {
@@ -71,7 +70,7 @@ export const dislikeCard = async (req, res) => {
       { $pull: { likes: req.user._id } },
       { new: true },
     ).orFail();
-    res.send({ data: dislikedCard });
+    return res.send({ data: dislikedCard });
   } catch (err) {
     if (err.name === 'CastError') {
       return res.status(400).send({ message: 'ID con formato incorrecto' });
@@ -79,6 +78,6 @@ export const dislikeCard = async (req, res) => {
     if (err.name === 'DocumentNotFound') {
       return res.status(404).send({ message: 'No se ha encontrado la carta' });
     }
+    return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
   }
-  return res.status(400).send({ message: 'Ha ocurrido un error en el servidor' });
 };
